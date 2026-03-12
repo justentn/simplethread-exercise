@@ -36,7 +36,7 @@ class Reimburse:
 
         self.projects = projects
 
-    def calculate_reimburstment(self) -> int:
+    def calculate_reimbursement(self) -> int:
         """
         Calculates the reimbursement amount.
 

@@ -30,7 +30,7 @@ if __name__ == "__main__":
         Project(date(2024, 10, 4), date(2024, 10, 6), CityType.HIGH),
     ]
 
-    print(f"Set 1: ${Reimburse(set1).calculate_reimburstment()}")
-    print(f"Set 2: ${Reimburse(set2).calculate_reimburstment()}")
-    print(f"Set 3: ${Reimburse(set3).calculate_reimburstment()}")
-    print(f"Set 4: ${Reimburse(set4).calculate_reimburstment()}")
+    print(f"Set 1: ${Reimburse(set1).calculate_reimbursement()}")
+    print(f"Set 2: ${Reimburse(set2).calculate_reimbursement()}")
+    print(f"Set 3: ${Reimburse(set3).calculate_reimbursement()}")
+    print(f"Set 4: ${Reimburse(set4).calculate_reimbursement()}")
