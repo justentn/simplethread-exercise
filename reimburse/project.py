@@ -11,12 +11,13 @@ class Project:
     if it resides in a low cost or high cost city.
     """
 
-    startDate = date
-    endDate = date
-    cityType = CityType
+    startDate: date
+    endDate: date
+    cityType: CityType
     
     def __init__(self, start: date, end: date, cityType: CityType):
-        """Initializes a project with a start date, end date and a city type.
+        """
+        Initializes a project with a start date, end date and a city type.
         
         Args:
             start: The project's start date.
