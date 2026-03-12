@@ -23,18 +23,25 @@ Set 1:
 
 Set 2:
   Project 1: Low Cost City Start Date: 10/1/24 End Date: 10/1/24
+
   Project 2: High Cost City Start Date: 10/2/24 End Date: 10/6/24
+
   Project 3: Low Cost City Start Date: 10/6/24 End Date: 10/9/24
 
 Set 3:
   Project 1: Low Cost City Start Date: 9/30/24 End Date: 10/3/24
+
   Project 2: High Cost City Start Date: 10/5/24 End Date: 10/7/24
+
   Project 3: High Cost City Start Date: 10/8/24 End Date: 10/8/24
 
 Set 4:
   Project 1: Low Cost City Start Date: 10/1/24 End Date: 10/1/24
+
   Project 2: Low Cost City Start Date: 10/1/24 End Date: 10/1/24
+
   Project 3: High Cost City Start Date: 10/2/24 End Date: 10/3/24
+
   Project 4: High Cost City Start Date: 10/2/24 End Date: 10/6/24
 
 ## Dependencies
@@ -42,3 +49,9 @@ Set 4:
 - `Python3`
 
 ## How To Run
+
+1. Open a terminal
+2. Create a python virtual environment using `python3 -m venv .` 
+3. Activate your python virtual environment using `source ./bin/activate`
+4. Install the required dependencies using `pip install -r requirements.txt`
+5. Run the command `pytest`
