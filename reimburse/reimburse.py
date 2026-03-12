@@ -1,4 +1,5 @@
 from datetime import timedelta
+from typing import Final
 
 from reimburse.citytype import CityType
 from reimburse.project import Project
@@ -20,6 +21,10 @@ class Reimburse:
     """
 
     projects: list[Project] = []
+    LOW_COST_FULL_DAY_RATE: Final[int] = 75
+    HIGH_COST_FULL_DAY_RATE: Final[int] = 85
+    LOW_COST_TRAVEL_DAY_RATE: Final[int] = 45
+    HIGH_COST_TRAVEL_DAY_RATE: Final[int] = 55
 
     def __init__(self, projects: list[Project]):
         """
@@ -63,7 +68,7 @@ class Reimburse:
                 travelDates.add(currentProject.endDate)
                 travelDates.add(nextProject.startDate)
 
-        # calculate the reimbursement 
+        # calculate the reimbursement.
         for project in sortedProjects:
             currentProject = project.startDate
             while currentProject <= project.endDate:
@@ -78,9 +83,9 @@ class Reimburse:
                     seenDates.add(currentProject)
                     isTravelDay = currentProject in travelDates
                     if isTravelDay:
-                        total += 55 if project.cityType == CityType.HIGH else 45
+                        total += self.HIGH_COST_TRAVEL_DAY_RATE if project.cityType == CityType.HIGH else self.LOW_COST_TRAVEL_DAY_RATE
                     else:
-                        total += 85 if project.cityType == CityType.HIGH else 75
+                        total += self.HIGH_COST_FULL_DAY_RATE if project.cityType == CityType.HIGH else self.LOW_COST_FULL_DAY_RATE
 
                 currentProject += timedelta(days=1) 
 
