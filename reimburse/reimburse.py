@@ -45,7 +45,6 @@ class Reimburse:
         """
 
         total = 0
-        travelDates = set()
         seenDates = set()
 
         # sort projects by their start date.
@@ -54,19 +53,7 @@ class Reimburse:
         if not sortedProjects: 
             return 0
 
-        # first and last days of a project are travel days.
-        travelDates.add(sortedProjects[0].startDate)
-        travelDates.add(sortedProjects[-1].endDate)
-        
-        # find any gaps between projects to determine any
-        # additional travel days.
-        for i in range(len(sortedProjects) - 1):
-            currentProject = sortedProjects[i]
-            nextProject = sortedProjects[i + 1]
-
-            if (nextProject.startDate - currentProject.endDate).days > 1:
-                travelDates.add(currentProject.endDate)
-                travelDates.add(nextProject.startDate)
+        travelDates = self._find_gap_travel_days(sortedProjects)
 
         # calculate the reimbursement.
         for project in sortedProjects:
@@ -91,3 +78,33 @@ class Reimburse:
                 currentProjectStartDate += timedelta(days=1) 
 
         return total
+    
+
+    def _find_gap_travel_days(self, projects: list[Project]) -> set:
+        """
+        Finds gaps between projects and marks them as travel days.
+
+        Args:
+            projects: A list of projects 
+
+        Returns:
+            A set of travel days between projects.
+        """
+
+        travelDates = set()
+        # first and last days of a project are travel days.
+        travelDates.add(projects[0].startDate)
+        travelDates.add(projects[-1].endDate)
+
+        # find any gaps between projects to determine any
+        # additional travel days.
+        for i in range(len(projects) - 1):
+            currentProject = projects[i]
+            nextProject = projects[i + 1]
+
+            if (nextProject.startDate - currentProject.endDate).days > 1:
+                travelDates.add(currentProject.endDate)
+                travelDates.add(nextProject.startDate)
+
+        return travelDates
+
