@@ -6,11 +6,16 @@ An object representing a project. Defines start dates and end dates.
 First and last days are considered travel dates.
 """
 class Project: 
-    # Start Date
+    """Start date"""
     startDate = date()
-    # End Date
+
+    """End date"""
     endDate = date()
-    # Flag to determine if this project rates belong in a low cost or high cost city
+
+    """
+    Flag to determine if this project rates belong in a low cost or 
+    high cost city.
+    """
     isLowCost = False
     
     def __init__(self, start, end, isLowCost):
