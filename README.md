@@ -54,4 +54,4 @@ Set 4:
 2. Create a python virtual environment using `python3 -m venv .` 
 3. Activate your python virtual environment using `source ./bin/activate`
 4. Install the required dependencies using `pip install -r requirements.txt`
-5. Run the command `pytest`
+5. Run the command `pytest` or `python3 main.py`

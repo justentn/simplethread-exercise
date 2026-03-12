@@ -2,25 +2,28 @@ from datetime import date
 
 from reimburse.citytype import CityType
 
-"""
-An object representing a project. Defines start dates and end dates.
 
-First and last days are considered travel dates.
-"""
 class Project: 
-    """Start date."""
+    """
+    An object representing a project. 
+
+    A project contains information on the project's start and end dates and
+    if it resides in a low cost or high cost city.
+    """
+
     startDate = date
-
-    """End date."""
     endDate = date
-
-    """
-    Determines if this project is located within a high cost
-    or low cost city.
-    """
     cityType = CityType
     
     def __init__(self, start: date, end: date, cityType: CityType):
+        """Initializes a project with a start date, end date and a city type.
+        
+        Args:
+            start: The project's start date.
+            end: The project's end date.
+            cityType: Determines if the project is in a high or low cost city.
+        """
+
         self.startDate = start
         self.endDate = end
         self.cityType = cityType

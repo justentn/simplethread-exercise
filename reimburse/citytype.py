@@ -1,10 +1,9 @@
 from enum import Enum
 
-"""
-An enumeration that determines if the city is of low cost or 
-high cost.
-"""
+
 class CityType(Enum):
+    """Determines if a city is low cost or high cost."""
+
     LOW = "low"
     HIGH = "high"
     
