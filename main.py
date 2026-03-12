@@ -6,7 +6,6 @@ from reimburse.citytype import CityType
 from reimburse.project import Project
 from reimburse.reimburse import Reimburse
 
-
 if __name__ == "__main__":
     set1 = [
         Project(date(2024, 10, 1), date(2024, 10, 4), CityType.LOW),

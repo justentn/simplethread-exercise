@@ -53,7 +53,8 @@ class Reimburse:
         travelDates.add(sortedProjects[0].startDate)
         travelDates.add(sortedProjects[-1].endDate)
         
-        # find any gaps between projects to any additional travel days.
+        # find any gaps between projects to determine any
+        # additional travel days.
         for i in range(len(sortedProjects) - 1):
             currentProject = sortedProjects[i]
             nextProject = sortedProjects[i + 1]

@@ -44,14 +44,22 @@ Set 4:
 
   Project 4: High Cost City Start Date: 10/2/24 End Date: 10/6/24
 
+
+## Assumptions
+
+- When a project overlaps on the same date, the project with the earliest start date
+  determines the reimbursement rate for that day.
+- A project with an end date before its start date results in $0 total.
+- An empty set of projects returns $0.
+
 ## Dependencies
 
-- `Python3`
+- `Python3.11+`
 
 ## How To Run
 
 1. Open a terminal
-2. Create a python virtual environment using `python3 -m venv .` 
-3. Activate your python virtual environment using `source ./bin/activate`
+2. Create a python virtual environment using `python3 -m venv .venv` 
+3. Activate your python virtual environment using `source .venv/bin/activate`
 4. Install the required dependencies using `pip install -r requirements.txt`
 5. Run the command `pytest` or `python3 main.py`
