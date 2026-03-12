@@ -70,8 +70,8 @@ class Reimburse:
 
         # calculate the reimbursement.
         for project in sortedProjects:
-            currentProject = project.startDate
-            while currentProject <= project.endDate:
+            currentProjectStartDate = project.startDate
+            while currentProjectStartDate <= project.endDate:
                 """ 
                 check if we have already been reimbursed for the day
 
@@ -79,14 +79,15 @@ class Reimburse:
                 the first project with the earliest start date will determine 
                 the reimbursement rate for that day.
                 """
-                if currentProject not in seenDates:
-                    seenDates.add(currentProject)
-                    isTravelDay = currentProject in travelDates
+                if currentProjectStartDate not in seenDates:
+                    seenDates.add(currentProjectStartDate)
+                    isTravelDay = currentProjectStartDate in travelDates
+
                     if isTravelDay:
                         total += self.HIGH_COST_TRAVEL_DAY_RATE if project.cityType == CityType.HIGH else self.LOW_COST_TRAVEL_DAY_RATE
                     else:
                         total += self.HIGH_COST_FULL_DAY_RATE if project.cityType == CityType.HIGH else self.LOW_COST_FULL_DAY_RATE
 
-                currentProject += timedelta(days=1) 
+                currentProjectStartDate += timedelta(days=1) 
 
         return total
