@@ -65,7 +65,7 @@ def _find_travel_days(projects: list[Project]) -> set[date]:
     """
 
     if not projects:
-        return 0
+        return set()
 
     travel_dates = set()
     date_sorted_projects = sorted(projects, key=lambda p: (p.start_date))
