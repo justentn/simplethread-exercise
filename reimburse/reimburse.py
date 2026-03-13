@@ -59,9 +59,10 @@ def _find_gap_travel_days(projects: list[Project]) -> set:
     """
 
     travel_dates = set()
-    # first and last days of a project are travel days.
+    # grab the first travel date
     travel_dates.add(projects[0].start_date)
-    travel_dates.add(projects[-1].end_date)
+    # grab the latest end date
+    travel_dates.add(max(p.end_date for p in projects))
 
     # find any gaps between projects to determine any
     # additional travel days.
