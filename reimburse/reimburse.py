@@ -40,9 +40,9 @@ def calculate_reimbursement(projects: list[Project]) -> int:
         while current_date <= project.end_date:
             # check if we have already been reimbursed for the day
             # note: if overlapping projects cover the same date,
-            # the first project in the list with the date will determine
+            # the first project in the list that claims the date will determine
             # the reimbursement rate for that day. Projects are sorted
-            # based on city types, favoring the high cost rate.
+            # based on city types to ensure the high cost rate is used.
             if current_date not in seen_dates:
                 seen_dates.add(current_date)
                 is_travel_day = current_date in travel_dates
@@ -68,15 +68,21 @@ def _find_travel_days(projects: list[Project]) -> set[date]:
         return set()
 
     travel_dates = set()
-    date_sorted_projects = sorted(projects, key=lambda p: (p.start_date))
+
+    # filter out invalid projects where end_date is before start_date.
+    valid_projects = [p for p in projects if p.start_date <= p.end_date]
+
+    if not valid_projects:
+        return set()
+
+    date_sorted_projects = sorted(valid_projects, key=lambda p: p.start_date)
     first_start_date = date_sorted_projects[0].start_date
     last_end_date = max(p.end_date for p in date_sorted_projects)
 
-    # prevent adding to the travel day bucket
-    # if a project starts and ends on the same date.
-    if first_start_date != last_end_date:
-        travel_dates.add(first_start_date)
-        travel_dates.add(last_end_date)
+    # throw in the very first day and latest date into our
+    # travel day bucket
+    travel_dates.add(first_start_date)
+    travel_dates.add(last_end_date)
 
     # find any gaps between projects to determine any
     # additional travel days.

@@ -20,7 +20,7 @@ class Project:
         Args:
             start: The project's start date.
             end: The project's end date.
-            cityType: Determines if the project is in a high or low cost city.
+            city_type: Determines if the project is in a high or low cost city.
         """
 
         self.start_date = start

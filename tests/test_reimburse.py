@@ -94,7 +94,7 @@ def test_set7():
 
 
 def test_set8():
-    expected_travel_days = 0
+    expected_travel_days = 1
     projects = [
         Project(date(2024, 10, 1), date(2024, 10, 1), CityType.LOW),
     ]
@@ -103,14 +103,14 @@ def test_set8():
     print(f"\nSet 8 travel days: {result}")
     assert result == expected_travel_days
 
-    expected_val = 75
+    expected_val = 45
     result = calculate_reimbursement(projects)
     print(f"Set 8 result: ${result}")
     assert result == expected_val
 
 
 def test_set9():
-    expected_travel_days = 0
+    expected_travel_days = 1
     projects = [
         Project(date(2024, 10, 1), date(2024, 10, 1), CityType.LOW),
         Project(date(2024, 10, 1), date(2024, 10, 1), CityType.LOW),
@@ -121,7 +121,7 @@ def test_set9():
     print(f"\nSet 9 travel days: {result}")
     assert result == expected_travel_days
 
-    expected_val = 85
+    expected_val = 55
     result = calculate_reimbursement(projects)
     print(f"Set 9 result: ${result}")
     assert result == expected_val
@@ -181,4 +181,104 @@ def test_set12():
     expected_val = 915
     result = calculate_reimbursement(projects)
     print(f"Set 12 result: ${result}")
+    assert result == expected_val
+
+
+def test_set13():
+    expected_travel_days = 1
+    projects = [
+        Project(date(2024, 10, 1), date(2024, 10, 1), CityType.HIGH),
+    ]
+
+    travel_days = _find_travel_days(projects)
+    print(f"\nSet 13 travel days: {len(travel_days)}")
+    assert len(travel_days) == expected_travel_days
+
+    expected_val = 55
+    result = calculate_reimbursement(projects)
+    print(f"Set 13 result: ${result}")
+    assert result == expected_val
+
+
+def test_set14():
+    expected_travel_days = 2
+    projects = [
+        Project(date(2024, 10, 1), date(2024, 10, 10), CityType.HIGH),
+        Project(date(2024, 10, 11), date(2024, 10, 20), CityType.HIGH),
+    ]
+
+    travel_days = _find_travel_days(projects)
+    print(f"\nSet 14 travel days: {len(travel_days)}")
+    assert len(travel_days) == expected_travel_days
+
+    expected_val = 1640
+    result = calculate_reimbursement(projects)
+    print(f"Set 14 result: ${result}")
+    assert result == expected_val
+
+
+def test_set15():
+    expected_travel_days = 2
+    projects = [
+        Project(date(2024, 10, 1), date(2024, 10, 10), CityType.LOW),
+        Project(date(2024, 10, 11), date(2024, 10, 20), CityType.LOW),
+    ]
+
+    travel_days = _find_travel_days(projects)
+    print(f"\nSet 15 travel days: {len(travel_days)}")
+    assert len(travel_days) == expected_travel_days
+
+    expected_val = 1440
+    result = calculate_reimbursement(projects)
+    print(f"Set 15 result: ${result}")
+    assert result == expected_val
+
+
+def test_set16():
+    expected_travel_days = 2
+    projects = [
+        Project(date(2024, 10, 1), date(2025, 10, 5), CityType.LOW),
+    ]
+
+    travel_days = _find_travel_days(projects)
+    print(f"\nSet 16 travel days: {len(travel_days)}")
+    assert len(travel_days) == expected_travel_days
+
+    expected_val = 27690
+    result = calculate_reimbursement(projects)
+    print(f"Set 16 result: ${result}")
+    assert result == expected_val
+
+
+def test_set17():
+    expected_travel_days = 4
+    projects = [
+        Project(date(2024, 10, 1), date(2024, 10, 5), CityType.HIGH),
+        Project(date(2024, 11, 1), date(2024, 12, 5), CityType.LOW),
+    ]
+
+    travel_days = _find_travel_days(projects)
+    print(f"\nSet 17 travel days: {len(travel_days)}")
+    assert len(travel_days) == expected_travel_days
+
+    expected_val = 2930
+    result = calculate_reimbursement(projects)
+    print(f"Set 17 result: ${result}")
+    assert result == expected_val
+
+
+def test_set18():
+    expected_travel_days = 0
+    projects = [
+        Project(date(2025, 10, 1), date(2024, 10, 5), CityType.HIGH),
+        Project(date(2025, 11, 1), date(2024, 12, 5), CityType.LOW),
+    ]
+
+    travel_days = _find_travel_days(projects)
+    print(f"\nSet 18 travel days: {len(travel_days)}")
+    assert len(travel_days) == expected_travel_days
+
+    expected_val = 0
+    result = calculate_reimbursement(projects)
+    print(f"Set 18 result: ${result}")
     assert result == expected_val

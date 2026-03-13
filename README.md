@@ -51,7 +51,7 @@ Set 4:
 determine the reimbursement, we prioritize the higher rate.
 - A project with an end date before its start date results in $0 total.
 - An empty set of projects returns $0.
-- If a project starts and ends on the same day, it will be marked as a full day.
+- If a project starts and ends on the same day, it will be marked as a travel day.
 
 ## Dependencies
 
