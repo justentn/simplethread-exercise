@@ -6,4 +6,3 @@ class CityType(Enum):
 
     LOW = "low"
     HIGH = "high"
-    

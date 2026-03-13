@@ -3,7 +3,7 @@ from datetime import date
 from reimburse.citytype import CityType
 
 
-class Project: 
+class Project:
     """An object representing a project. 
 
     A project contains information on the project's start and end dates and
@@ -13,10 +13,10 @@ class Project:
     start_date: date
     end_date: date
     city_type: CityType
-    
+
     def __init__(self, start: date, end: date, cityType: CityType):
         """Initializes a project with a start date, end date and a city type.
-        
+
         Args:
             start: The project's start date.
             end: The project's end date.
