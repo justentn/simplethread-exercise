@@ -70,6 +70,7 @@ def _find_gap_travel_days(projects: list[Project]) -> set:
         current_project = projects[i]
         next_project = projects[i + 1]
 
+        # 0 = overlap, 1 = contiguous, >1 = gap
         if (next_project.start_date - current_project.end_date).days > 1:
             travel_dates.add(current_project.end_date)
             travel_dates.add(next_project.start_date)

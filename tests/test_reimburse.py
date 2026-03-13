@@ -3,6 +3,7 @@ from datetime import date
 from reimburse.citytype import CityType
 from reimburse.project import Project
 from reimburse.reimburse import calculate_reimbursement
+from reimburse.reimburse import _find_gap_travel_days
 
 
 def test_set1():
@@ -68,4 +69,21 @@ def test_set6():
 
     result =  calculate_reimbursement(projects)
     print(f"\nSet 6 result: ${result}")
+    assert result == expected_val
+    
+    
+def test_sequence():
+    expected_val = 4
+    projects = [
+        Project(date(2024, 10, 1), date(2024, 10, 1), CityType.LOW),
+        Project(date(2024, 10, 2), date(2024, 10, 6), CityType.HIGH),
+        Project(date(2024, 10, 6), date(2024, 10, 9), CityType.LOW),
+        Project(date(2024, 10, 13), date(2024, 10, 14), CityType.LOW),
+        Project(date(2024, 10, 14), date(2024, 10, 14), CityType.LOW),
+        Project(date(2024, 10, 15), date(2024, 10, 16), CityType.LOW),
+        Project(date(2024, 10, 13), date(2024, 10, 19), CityType.LOW)
+    ]
+
+    result =  len(_find_gap_travel_days(projects))
+    print(f"\nSet 7 travel days: {result}")
     assert result == expected_val
