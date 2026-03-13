@@ -59,8 +59,16 @@ determine the reimbursement, we prioritize the higher rate.
 
 ## How To Run
 
+### macOS / linux
 1. Open a terminal
 2. Create a python virtual environment using `python3 -m venv .venv` 
-3. Activate your python virtual environment using `source .venv/bin/activate`
+3. Activate your python virtual environment using `source .venv/bin/activate` 
 4. Install the required dependencies using `pip install -r requirements.txt`
 5. Run the command `python3 main.py` or `pytest -s -v` 
+
+### Windows
+1. Open Command Prompt or Powershell
+2. Create a python virtual environment using `python -m venv .venv` 
+3. Activate your python virtual environment using `.venv\bin\activate` or `.venv\bin\Activate.ps1`
+4. Install the required dependencies using `pip install -r requirements.txt`
+5. Run the command `python main.py` or `pytest -s -v` 
