@@ -4,107 +4,83 @@ from typing import Final
 from reimburse.citytype import CityType
 from reimburse.project import Project
 
+LOW_COST_FULL_DAY_RATE: Final[int] = 75
+HIGH_COST_FULL_DAY_RATE: Final[int] = 85
+LOW_COST_TRAVEL_DAY_RATE: Final[int] = 45
+HIGH_COST_TRAVEL_DAY_RATE: Final[int] = 55
 
-class Reimburse:
+def calculate_reimbursement(projects: list[Project]) -> int:
     """
-    Class used to calculate reimbursements for projects.
+    Calculates the reimbursement amount.
 
-    Contains a list of projects used for reimbursements. Reimbursements are 
-    determined based on if the dates fall on a travel day or a full day.
+    Args:
+        projects: A list of projects
 
-    Full day rates
-        High cost city: 85
-        Low cost city: 75
-    Travel day rates
-        High cost city: 55
-        Low cost city: 45
+    Returns:
+        The total reimbursement amount in dollars.
     """
 
-    projects: list[Project] = []
-    LOW_COST_FULL_DAY_RATE: Final[int] = 75
-    HIGH_COST_FULL_DAY_RATE: Final[int] = 85
-    LOW_COST_TRAVEL_DAY_RATE: Final[int] = 45
-    HIGH_COST_TRAVEL_DAY_RATE: Final[int] = 55
+    total = 0
+    seenDates = set()
 
-    def __init__(self, projects: list[Project]):
-        """
-        Initialize a set of projects used for calculations.
-        
-        Args:
-            projects: A list of projects
-        """
+    # sort projects by their start date.
+    sortedProjects = sorted(projects, key=lambda p: p.startDate)
 
-        self.projects = projects
+    if not sortedProjects: 
+        return 0
 
-    def calculate_reimbursement(self) -> int:
-        """
-        Calculates the reimbursement amount.
+    travelDates = _find_gap_travel_days(sortedProjects)
 
-        Returns:
-            The total reimbursement amount in dollars.
-        """
+    # calculate the reimbursement.
+    for project in sortedProjects:
+        currentProjectStartDate = project.startDate
+        while currentProjectStartDate <= project.endDate:
+            """ 
+            check if we have already been reimbursed for the day
 
-        total = 0
-        seenDates = set()
+            note: if overlapping projects cover the same date, 
+            the first project with the earliest start date will determine 
+            the reimbursement rate for that day.
+            """
+            if currentProjectStartDate not in seenDates:
+                seenDates.add(currentProjectStartDate)
+                isTravelDay = currentProjectStartDate in travelDates
 
-        # sort projects by their start date.
-        sortedProjects = sorted(self.projects, key=lambda p: p.startDate)
+                if isTravelDay:
+                    total += HIGH_COST_TRAVEL_DAY_RATE if project.cityType == CityType.HIGH else LOW_COST_TRAVEL_DAY_RATE
+                else:
+                    total += HIGH_COST_FULL_DAY_RATE if project.cityType == CityType.HIGH else LOW_COST_FULL_DAY_RATE
 
-        if not sortedProjects: 
-            return 0
+            currentProjectStartDate += timedelta(days=1) 
 
-        travelDates = self._find_gap_travel_days(sortedProjects)
+    return total
 
-        # calculate the reimbursement.
-        for project in sortedProjects:
-            currentProjectStartDate = project.startDate
-            while currentProjectStartDate <= project.endDate:
-                """ 
-                check if we have already been reimbursed for the day
 
-                note: if overlapping projects cover the same date, 
-                the first project with the earliest start date will determine 
-                the reimbursement rate for that day.
-                """
-                if currentProjectStartDate not in seenDates:
-                    seenDates.add(currentProjectStartDate)
-                    isTravelDay = currentProjectStartDate in travelDates
+def _find_gap_travel_days(projects: list[Project]) -> set:
+    """
+    Finds gaps between projects and marks them as travel days.
 
-                    if isTravelDay:
-                        total += self.HIGH_COST_TRAVEL_DAY_RATE if project.cityType == CityType.HIGH else self.LOW_COST_TRAVEL_DAY_RATE
-                    else:
-                        total += self.HIGH_COST_FULL_DAY_RATE if project.cityType == CityType.HIGH else self.LOW_COST_FULL_DAY_RATE
+    Args:
+        projects: A list of projects 
 
-                currentProjectStartDate += timedelta(days=1) 
+    Returns:
+        A set of travel days between projects.
+    """
 
-        return total
-    
+    travelDates = set()
+    # first and last days of a project are travel days.
+    travelDates.add(projects[0].startDate)
+    travelDates.add(projects[-1].endDate)
 
-    def _find_gap_travel_days(self, projects: list[Project]) -> set:
-        """
-        Finds gaps between projects and marks them as travel days.
+    # find any gaps between projects to determine any
+    # additional travel days.
+    for i in range(len(projects) - 1):
+        currentProject = projects[i]
+        nextProject = projects[i + 1]
 
-        Args:
-            projects: A list of projects 
+        if (nextProject.startDate - currentProject.endDate).days > 1:
+            travelDates.add(currentProject.endDate)
+            travelDates.add(nextProject.startDate)
 
-        Returns:
-            A set of travel days between projects.
-        """
-
-        travelDates = set()
-        # first and last days of a project are travel days.
-        travelDates.add(projects[0].startDate)
-        travelDates.add(projects[-1].endDate)
-
-        # find any gaps between projects to determine any
-        # additional travel days.
-        for i in range(len(projects) - 1):
-            currentProject = projects[i]
-            nextProject = projects[i + 1]
-
-            if (nextProject.startDate - currentProject.endDate).days > 1:
-                travelDates.add(currentProject.endDate)
-                travelDates.add(nextProject.startDate)
-
-        return travelDates
+    return travelDates
 

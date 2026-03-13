@@ -2,7 +2,7 @@ from datetime import date
 
 from reimburse.citytype import CityType
 from reimburse.project import Project
-from reimburse.reimburse import Reimburse
+from reimburse.reimburse import calculate_reimbursement
 
 
 def test_set1():
@@ -11,7 +11,7 @@ def test_set1():
         Project(date(2024, 10, 1), date(2024, 10, 4), CityType.LOW)
     ]
 
-    assert Reimburse(projects).calculate_reimbursement() == expectedVal
+    assert calculate_reimbursement(projects) == expectedVal
 
 def test_set2():
     expectedVal = 665
@@ -21,7 +21,7 @@ def test_set2():
         Project(date(2024, 10, 6), date(2024, 10, 9), CityType.LOW)
     ]
 
-    assert Reimburse(projects).calculate_reimbursement() == expectedVal
+    assert calculate_reimbursement(projects) == expectedVal
 
 def test_set3():
     expectedVal = 520
@@ -31,7 +31,7 @@ def test_set3():
         Project(date(2024, 10, 8), date(2024, 10, 8), CityType.HIGH)
     ]
 
-    assert Reimburse(projects).calculate_reimbursement() == expectedVal
+    assert calculate_reimbursement(projects) == expectedVal
 
 def test_set4():
     expectedVal = 440
@@ -42,13 +42,13 @@ def test_set4():
         Project(date(2024, 10, 2), date(2024, 10, 6), CityType.HIGH)
     ]
 
-    assert Reimburse(projects).calculate_reimbursement() == expectedVal
+    assert calculate_reimbursement(projects) == expectedVal
 
 def test_set5():
     expectedVal = 0
     projects = []
 
-    assert Reimburse(projects).calculate_reimbursement() == expectedVal
+    assert calculate_reimbursement(projects) == expectedVal
 
 def test_set6():
     expectedVal = 0
@@ -56,4 +56,4 @@ def test_set6():
         Project(date(2024, 10, 4), date(2024, 10, 1), CityType.LOW),
     ]
 
-    assert Reimburse(projects).calculate_reimbursement() == expectedVal
+    assert calculate_reimbursement(projects) == expectedVal
