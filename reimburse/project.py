@@ -4,20 +4,18 @@ from reimburse.citytype import CityType
 
 
 class Project: 
-    """
-    An object representing a project. 
+    """An object representing a project. 
 
     A project contains information on the project's start and end dates and
     if it resides in a low cost or high cost city.
     """
 
-    startDate: date
-    endDate: date
-    cityType: CityType
+    start_date: date
+    end_date: date
+    city_type: CityType
     
     def __init__(self, start: date, end: date, cityType: CityType):
-        """
-        Initializes a project with a start date, end date and a city type.
+        """Initializes a project with a start date, end date and a city type.
         
         Args:
             start: The project's start date.
@@ -25,6 +23,6 @@ class Project:
             cityType: Determines if the project is in a high or low cost city.
         """
 
-        self.startDate = start
-        self.endDate = end
-        self.cityType = cityType
+        self.start_date = start
+        self.end_date = end
+        self.city_type = cityType
