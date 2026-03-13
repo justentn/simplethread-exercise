@@ -164,3 +164,21 @@ def test_set11():
     result = calculate_reimbursement(projects)
     print(f"Set 11 result: ${result}")
     assert result == expected_val
+
+
+def test_set12():
+    expected_travel_days = 2
+    projects = [
+        Project(date(2024, 10, 1), date(2024, 10, 13), CityType.LOW),
+        # invalid project start & end dates
+        Project(date(2024, 10, 8), date(2024, 10, 5), CityType.LOW),
+    ]
+
+    travel_days = _find_travel_days(projects)
+    print(f"\nSet 12 travel days: {len(travel_days)}")
+    assert len(travel_days) == expected_travel_days
+
+    expected_val = 915
+    result = calculate_reimbursement(projects)
+    print(f"Set 12 result: ${result}")
+    assert result == expected_val
