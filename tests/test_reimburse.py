@@ -3,7 +3,7 @@ from datetime import date
 from reimburse.citytype import CityType
 from reimburse.project import Project
 from reimburse.reimburse import calculate_reimbursement
-from reimburse.reimburse import _find_gap_travel_days
+from reimburse.reimburse import _find_travel_days
 
 
 def test_set1():
@@ -83,7 +83,7 @@ def test_set7():
         Project(date(2024, 10, 13), date(2024, 10, 19), CityType.LOW)
     ]
 
-    result =  len(_find_gap_travel_days(projects))
+    result =  len(_find_travel_days(projects))
     print(f"\nSet 7 travel days: {result}")
     assert result == expected_val
     
@@ -93,7 +93,7 @@ def test_set8():
         Project(date(2024, 10, 1), date(2024, 10, 1), CityType.LOW),
     ]
 
-    result =  len(_find_gap_travel_days(projects))
+    result =  len(_find_travel_days(projects))
     print(f"\nSet 8 travel days: {result}")
     assert result == expected_travel_days
     
@@ -110,7 +110,7 @@ def test_set9():
         Project(date(2024, 10, 1), date(2024, 10, 1), CityType.HIGH),
     ]
 
-    result =  len(_find_gap_travel_days(projects))
+    result =  len(_find_travel_days(projects))
     print(f"\nSet 9 travel days: {result}")
     assert result == expected_travel_days
     
@@ -127,11 +127,31 @@ def test_set10():
         Project(date(2024, 10, 12), date(2024, 10, 15), CityType.HIGH),
     ]
 
-    result =  len(_find_gap_travel_days(projects))
+    result =  len(_find_travel_days(projects))
     print(f"\nSet 10 travel days: {result}")
     assert result == expected_travel_days
     
-    expected_val = 1085
+    expected_val = 1105
     result = calculate_reimbursement(projects)
     print(f"Set 10 result: ${result}")
+    assert result == expected_val
+
+def test_set11():
+    expected_travel_days = 4
+    projects = [
+        Project(date(2024, 10, 1), date(2024, 10, 13), CityType.LOW),
+        Project(date(2024, 10, 3), date(2024, 10, 5), CityType.LOW),
+        Project(date(2024, 10, 12), date(2024, 10, 15), CityType.HIGH),
+        Project(date(2024, 10, 12), date(2024, 10, 15), CityType.LOW),
+        Project(date(2024, 10, 17), date(2024, 10, 20), CityType.HIGH),
+        Project(date(2024, 10, 19), date(2024, 10, 22), CityType.LOW),
+    ]
+
+    travel_days =  _find_travel_days(projects)
+    print(f"\nSet 11 travel days: {len(travel_days)}")
+    assert len(travel_days) == expected_travel_days
+    
+    expected_val = 1535
+    result = calculate_reimbursement(projects)
+    print(f"Set 11 result: ${result}")
     assert result == expected_val

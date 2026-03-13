@@ -20,18 +20,17 @@ def calculate_reimbursement(projects: list[Project]) -> int:
         The total reimbursement amount in dollars.
     """
 
+    if not projects: 
+        return 0
+
     total = 0
     seen_dates = set()
+    travel_dates = _find_travel_days(projects)
 
     # sort projects by their start date and their city type.
     # note: sort is done to prefer high cost cities to be processed
     # first.
-    sorted_projects = sorted(projects, key=lambda p: (p.start_date, p.city_type != CityType.HIGH))
-
-    if not sorted_projects: 
-        return 0
-
-    travel_dates = _find_gap_travel_days(sorted_projects)
+    sorted_projects = sorted(projects, key=lambda p: (p.city_type != CityType.HIGH, p.start_date))
 
     # calculate the reimbursement.
     for project in sorted_projects:
@@ -45,13 +44,14 @@ def calculate_reimbursement(projects: list[Project]) -> int:
             if current_date not in seen_dates:
                 seen_dates.add(current_date)
                 is_travel_day = current_date in travel_dates
-                total += _get_rate(project.city_type, is_travel_day)
+                rate = _get_rate(project.city_type, is_travel_day)
+                total += rate
 
             current_date += timedelta(days=1) 
 
     return total
 
-def _find_gap_travel_days(projects: list[Project]) -> set:
+def _find_travel_days(projects: list[Project]) -> set:
     """Finds gaps between projects and marks them as travel days.
 
     Args:
@@ -62,8 +62,9 @@ def _find_gap_travel_days(projects: list[Project]) -> set:
     """
 
     travel_dates = set()
-    first_start_date = projects[0].start_date
-    last_end_date = max(p.end_date for p in projects)
+    date_sorted_projects = sorted(projects, key=lambda p: (p.start_date))
+    first_start_date = date_sorted_projects[0].start_date
+    last_end_date = max(p.end_date for p in date_sorted_projects)
 
     # prevent adding to the travel day bucket
     # if a project starts and ends on the same date.
@@ -73,12 +74,12 @@ def _find_gap_travel_days(projects: list[Project]) -> set:
 
     # find any gaps between projects to determine any
     # additional travel days.
-    rolling_max_end_date = projects[0].end_date
-    for i in range(len(projects) - 1):
+    rolling_max_end_date = date_sorted_projects[0].end_date
+    for i in range(len(date_sorted_projects) - 1):
         # keep a rolling max to make sure we do not
         # capture false gaps
-        rolling_max_end_date = max(rolling_max_end_date, projects[i].end_date)
-        next_project = projects[i + 1]
+        rolling_max_end_date = max(rolling_max_end_date, date_sorted_projects[i].end_date)
+        next_project = date_sorted_projects[i + 1]
 
         # 0 = overlap, 1 = contiguous, >1 = gap
         if (next_project.start_date - rolling_max_end_date).days > 1:
