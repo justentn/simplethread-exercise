@@ -14,7 +14,7 @@ class Project:
     end_date: date
     city_type: CityType
 
-    def __init__(self, start: date, end: date, cityType: CityType):
+    def __init__(self, start: date, end: date, city_type: CityType):
         """Initializes a project with a start date, end date and a city type.
 
         Args:
@@ -25,4 +25,4 @@ class Project:
 
         self.start_date = start
         self.end_date = end
-        self.city_type = cityType
+        self.city_type = city_type
