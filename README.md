@@ -47,10 +47,11 @@ Set 4:
 
 ## Assumptions
 
-- When a project overlaps on the same date, the project with the earliest start date
-  determines the reimbursement rate for that day.
+- When a project dates overlap with another project, the city type is used to 
+determine the reimbursement, we prioritize the higher rate.
 - A project with an end date before its start date results in $0 total.
 - An empty set of projects returns $0.
+- If a project starts and ends on the same day, it will be marked as a full day.
 
 ## Dependencies
 

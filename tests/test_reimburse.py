@@ -71,8 +71,7 @@ def test_set6():
     print(f"\nSet 6 result: ${result}")
     assert result == expected_val
     
-    
-def test_sequence():
+def test_set7():
     expected_val = 4
     projects = [
         Project(date(2024, 10, 1), date(2024, 10, 1), CityType.LOW),
@@ -86,4 +85,53 @@ def test_sequence():
 
     result =  len(_find_gap_travel_days(projects))
     print(f"\nSet 7 travel days: {result}")
+    assert result == expected_val
+    
+def test_set8():
+    expected_travel_days = 0
+    projects = [
+        Project(date(2024, 10, 1), date(2024, 10, 1), CityType.LOW),
+    ]
+
+    result =  len(_find_gap_travel_days(projects))
+    print(f"\nSet 8 travel days: {result}")
+    assert result == expected_travel_days
+    
+    expected_val = 75
+    result = calculate_reimbursement(projects)
+    print(f"Set 8 result: ${result}")
+    assert result == expected_val
+    
+def test_set9():
+    expected_travel_days = 0
+    projects = [
+        Project(date(2024, 10, 1), date(2024, 10, 1), CityType.LOW),
+        Project(date(2024, 10, 1), date(2024, 10, 1), CityType.LOW),
+        Project(date(2024, 10, 1), date(2024, 10, 1), CityType.HIGH),
+    ]
+
+    result =  len(_find_gap_travel_days(projects))
+    print(f"\nSet 9 travel days: {result}")
+    assert result == expected_travel_days
+    
+    expected_val = 85
+    result = calculate_reimbursement(projects)
+    print(f"Set 9 result: ${result}")
+    assert result == expected_val
+    
+def test_set10():
+    expected_travel_days = 2
+    projects = [
+        Project(date(2024, 10, 1), date(2024, 10, 13), CityType.LOW),
+        Project(date(2024, 10, 3), date(2024, 10, 5), CityType.LOW),
+        Project(date(2024, 10, 12), date(2024, 10, 15), CityType.HIGH),
+    ]
+
+    result =  len(_find_gap_travel_days(projects))
+    print(f"\nSet 10 travel days: {result}")
+    assert result == expected_travel_days
+    
+    expected_val = 1085
+    result = calculate_reimbursement(projects)
+    print(f"Set 10 result: ${result}")
     assert result == expected_val
