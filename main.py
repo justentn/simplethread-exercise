@@ -27,7 +27,7 @@ if __name__ == "__main__":
         Project(date(2024, 10, 1), date(2024, 10, 1), CityType.LOW),
         Project(date(2024, 10, 1), date(2024, 10, 1), CityType.LOW),
         Project(date(2024, 10, 2), date(2024, 10, 3), CityType.HIGH),
-        Project(date(2024, 10, 4), date(2024, 10, 6), CityType.HIGH),
+        Project(date(2024, 10, 2), date(2024, 10, 6), CityType.HIGH),
     ]
 
     print(f"Set 1: ${calculate_reimbursement(set1)}")
