@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import date, timedelta
 from typing import Final
 
 from reimburse.citytype import CityType
@@ -54,7 +54,7 @@ def calculate_reimbursement(projects: list[Project]) -> int:
     return total
 
 
-def _find_travel_days(projects: list[Project]) -> set:
+def _find_travel_days(projects: list[Project]) -> set[date]:
     """Finds gaps between projects and marks them as travel days.
 
     Args:
@@ -63,6 +63,9 @@ def _find_travel_days(projects: list[Project]) -> set:
     Returns:
         A set containing travel dates.
     """
+
+    if not projects:
+        return 0
 
     travel_dates = set()
     date_sorted_projects = sorted(projects, key=lambda p: (p.start_date))
