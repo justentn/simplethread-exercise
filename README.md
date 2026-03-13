@@ -69,6 +69,6 @@ determine the reimbursement, we prioritize the higher rate.
 ### Windows
 1. Open Command Prompt or Powershell
 2. Create a python virtual environment using `python -m venv .venv` 
-3. Activate your python virtual environment using `.venv\bin\activate` or `.venv\bin\Activate.ps1`
+3. Activate your python virtual environment using `.\.venv\Scripts\Activate.ps1` or `.\.venv\Scripts\Activate.bat`
 4. Install the required dependencies using `pip install -r requirements.txt`
 5. Run the command `python main.py` or `pytest -s -v` 
